@@ -170,6 +170,7 @@ func (s *Server) globFiles(firstPass bool) {
 	log.Debugf("Evaluating file globs")
 	for _, glob := range s.config.Files {
 
+		log.Debugf("Evaluating glob: %s, tag: %s", glob.Path, glob.Tag)
 		tag := glob.Tag
 		files, err := filepath.Glob(utils.ResolvePath(glob.Path))
 
@@ -186,7 +187,7 @@ func (s *Server) globFiles(firstPass bool) {
 			case matchExps(file, s.config.ExcludeFiles):
 				log.Debugf("Skipping %s because it is excluded by regular expression", file)
 			default:
-				log.Infof("Forwarding file: %s", file)
+				log.Infof("Forwarding file: %s, tag: %s", file, tag)
 
 				whence := io.SeekStart
 
